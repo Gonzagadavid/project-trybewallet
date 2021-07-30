@@ -96,9 +96,9 @@ Através dessa aplicação, será possível realizar as operações básicas de 
 
   - Projeto individual.
 
-  - Serão dois dias de projeto.
+  - Serão 2 dias de projeto.
   
-  - Data de entrega para avaliação final do projeto: `DD/MM/YYYY - 14:00h`.
+  - Data de entrega para avaliação final do projeto: `09/08/2021 - 14:00h`.
 
 ---
 
