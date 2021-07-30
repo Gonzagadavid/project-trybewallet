@@ -1,9 +1,7 @@
 import { string } from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Input from '../components/Input';
-import Select from '../components/Select';
-import { inputs, selects } from '../data/wallet';
+import FormWallet from '../components/FormWallet/FormWallet';
 
 class Wallet extends Component {
   constructor() {
@@ -12,10 +10,23 @@ class Wallet extends Component {
       valor: 0,
       descricao: '',
       moeda: '',
+      moedas: [''],
       metodo: '',
       tag: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.fetchMoedas = this.fetchMoedas.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchMoedas();
+  }
+
+  async fetchMoedas() {
+    const respJson = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const moedasObj = await respJson.json();
+    const moedas = Object.keys(moedasObj).filter((moeda) => moeda !== 'USDT');
+    this.setState({ moedas });
   }
 
   handleChange({ target }) {
@@ -25,7 +36,7 @@ class Wallet extends Component {
 
   render() {
     const { emailField } = this.props;
-    const { state } = this;
+    const { moedas, valor, moeda, descricao, tag, metodo } = this.state;
     return (
       <div>
         <header>
@@ -33,34 +44,15 @@ class Wallet extends Component {
           <span data-testid="total-field">0</span>
           <span data-testid="header-currency-field">BRL</span>
         </header>
-        <form>
-          { inputs.map(({ labelText, type, id, name }) => (<Input
-            labelText={ labelText }
-            type={ type }
-            id={ id }
-            name={ name }
-            value={ state[name] }
-            change={ this.handleChange }
-            key={ id }
-          />))}
-          <Select
-            labelText="Moeda"
-            id="moeda"
-            name="moeda"
-            value={ state.moeda }
-            change={ this.handleChange }
-            options={ [''] }
-          />
-          {selects.map(({ labelText, options, id, name }) => (<Select
-            labelText={ labelText }
-            id={ id }
-            name={ name }
-            value={ state[name] }
-            change={ this.handleChange }
-            options={ options }
-            key={ id }
-          />))}
-        </form>
+        <FormWallet
+          moedas={ moedas }
+          handleChange={ this.handleChange }
+          valor={ valor }
+          descricao={ descricao }
+          moeda={ moeda }
+          metodo={ metodo }
+          tag={ tag }
+        />
       </div>
     );
   }
