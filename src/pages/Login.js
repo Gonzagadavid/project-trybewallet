@@ -49,7 +49,7 @@ class Login extends React.Component {
           change={ this.handleChange }
         />
         <Input
-          labelText="Password::"
+          labelText="Password:"
           type="password"
           id="password-input"
           name="password"

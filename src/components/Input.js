@@ -1,4 +1,4 @@
-import { func, string } from 'prop-types';
+import { func, string, number, oneOfType } from 'prop-types';
 import React from 'react';
 
 const Input = (props) => {
@@ -22,7 +22,7 @@ const Input = (props) => {
 Input.propTypes = {
   labelText: string.isRequired,
   id: string.isRequired,
-  value: string.isRequired,
+  value: oneOfType([number, string]).isRequired,
   change: func.isRequired,
   type: string.isRequired,
   name: string.isRequired,

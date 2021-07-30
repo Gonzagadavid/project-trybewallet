@@ -1,0 +1,58 @@
+import { string } from 'prop-types';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import Input from '../components/Input';
+
+class Wallet extends Component {
+  constructor() {
+    super();
+    this.state = {
+      totalField: 0,
+      currencyField: 'BRL',
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value }, () => this.checkValidation());
+  }
+
+  render() {
+    const { emailField } = this.props;
+    const { totalField, currencyField } = this.state;
+    return (
+      <div>
+        <header>
+          <span data-testid="email-field">{emailField}</span>
+          <Input
+            labelText="Total Gasto:"
+            type="number"
+            id="total-field"
+            name="totalField"
+            value={ totalField }
+            change={ this.handleChange }
+          />
+          <Input
+            labelText="Câmbio Utilizado:"
+            type="text"
+            id="header-currency-field"
+            name="currencyField"
+            value={ currencyField }
+            change={ this.handleChange }
+          />
+        </header>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = ({ user }) => ({
+  emailField: user.email,
+});
+
+export default connect(mapStateToProps)(Wallet);
+
+Wallet.propTypes = {
+  emailField: string.isRequired,
+};
