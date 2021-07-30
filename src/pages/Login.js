@@ -7,17 +7,26 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      notValid: true,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.checkValidation = this.checkValidation.bind(this);
   }
 
   handleChange({ target }) {
     const { name, value } = target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value }, () => this.checkValidation());
+  }
+
+  checkValidation() {
+    const { email, password } = this.state;
+    const minChars = 5;
+    const validation = !(/\w+@\w+.com/.test(email) && password.length > minChars);
+    this.setState({ notValid: validation });
   }
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, notValid } = this.state;
     return (
       <div>
         <Input
@@ -36,7 +45,7 @@ class Login extends React.Component {
           value={ password }
           change={ this.handleChange }
         />
-        <button type="button">Entrar</button>
+        <button type="button" disabled={ notValid }>Entrar</button>
       </div>
     );
   }
