@@ -7,8 +7,8 @@ export const EXPENSES_ERROR = 'EXPENSES_ERROR';
 
 export const actionEmail = (state) => ({ type: USER_EMAIL, state });
 
-export const getCurrenciesSucess = ({ type: CURRENCIES_SUCESS });
-export const getCurrenciesError = (state) => ({ type: CURRENCIES_ERROR, state });
+export const getCurrenciesSucess = (state) => ({ type: CURRENCIES_SUCESS, state });
+export const getCurrenciesError = ({ type: CURRENCIES_ERROR });
 
 export const getExpensesSucess = (state) => ({ type: EXPENSES_SUCESS, state });
-export const getExpensesError = (state) => ({ type: EXPENSES_SUCESS, state });
+export const getExpensesError = ({ type: EXPENSES_SUCESS });

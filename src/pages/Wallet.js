@@ -1,7 +1,8 @@
-import { string } from 'prop-types';
+import { arrayOf, func, string } from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FormWallet from '../components/FormWallet/FormWallet';
+import fetchCurrencies from '../reducers/fetchCurrencies';
 
 class Wallet extends Component {
   constructor() {
@@ -10,23 +11,15 @@ class Wallet extends Component {
       valor: 0,
       descricao: '',
       moeda: '',
-      moedas: [''],
       metodo: '',
       tag: '',
     };
     this.handleChange = this.handleChange.bind(this);
-    this.fetchMoedas = this.fetchMoedas.bind(this);
   }
 
   componentDidMount() {
-    this.fetchMoedas();
-  }
-
-  async fetchMoedas() {
-    const respJson = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const moedasObj = await respJson.json();
-    const moedas = Object.keys(moedasObj).filter((moeda) => moeda !== 'USDT');
-    this.setState({ moedas });
+    const { fetchMoedas } = this.props;
+    fetchMoedas();
   }
 
   handleChange({ target }) {
@@ -35,8 +28,8 @@ class Wallet extends Component {
   }
 
   render() {
-    const { emailField } = this.props;
-    const { moedas, valor, moeda, descricao, tag, metodo } = this.state;
+    const { emailField, moedas } = this.props;
+    const { valor, moeda, descricao, tag, metodo } = this.state;
     return (
       <div>
         <header>
@@ -58,12 +51,19 @@ class Wallet extends Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
+const mapStateToProps = ({ user, wallet }) => ({
   emailField: user.email,
+  moedas: wallet.currencies,
 });
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  fetchMoedas: () => dispatch(fetchCurrencies()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   emailField: string.isRequired,
+  fetchMoedas: func.isRequired,
+  moedas: arrayOf(string).isRequired,
 };

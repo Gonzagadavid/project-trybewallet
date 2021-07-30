@@ -2,7 +2,7 @@ import {
   CURRENCIES_ERROR, CURRENCIES_SUCESS, EXPENSES_ERROR, EXPENSES_SUCESS,
 } from '../actions';
 
-INITIAL_STATE = {
+const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   error: '',
