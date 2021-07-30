@@ -31,7 +31,7 @@ class Wallet extends Component {
 
   handleChange({ target }) {
     const { name, value } = target;
-    this.setState({ [name]: value }, () => this.checkValidation());
+    this.setState({ [name]: value });
   }
 
   render() {
