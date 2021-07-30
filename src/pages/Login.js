@@ -1,4 +1,8 @@
+import { func } from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { actionEmail } from '../actions';
 import Input from '../components/Input';
 
 class Login extends React.Component {
@@ -11,6 +15,7 @@ class Login extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.checkValidation = this.checkValidation.bind(this);
+    this.submitData = this.submitData.bind(this);
   }
 
   handleChange({ target }) {
@@ -21,8 +26,14 @@ class Login extends React.Component {
   checkValidation() {
     const { email, password } = this.state;
     const minChars = 5;
-    const validation = !(/\w+@\w+.com/.test(email) && password.length > minChars);
-    this.setState({ notValid: validation });
+    const notValid = !(/\w+@\w+.com/.test(email) && password.length > minChars);
+    this.setState({ notValid });
+  }
+
+  submitData() {
+    const { email } = this.state;
+    const { submitEmail } = this.props;
+    submitEmail(email);
   }
 
   render() {
@@ -45,10 +56,22 @@ class Login extends React.Component {
           value={ password }
           change={ this.handleChange }
         />
-        <button type="button" disabled={ notValid }>Entrar</button>
+        <Link to="/carteira">
+          <button type="button" onClick={ this.submitData } disabled={ notValid }>
+            Entrar
+          </button>
+        </Link>
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispachToProps = (dispatch) => ({
+  submitEmail: (email) => dispatch(actionEmail(email)),
+});
+
+export default connect(null, mapDispachToProps)(Login);
+
+Login.propTypes = {
+  submitEmail: func.isRequired,
+};
