@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { editExpense } from '../actions';
 import ExpenseTable from '../components/ExpenseTable/ExpenseTable';
 import FormWallet from '../components/FormWallet/FormWallet';
-import fetchCurrencies from '../reducers/fetchCurrencies';
-import fetchExpenses from '../reducers/fetchExpenses';
+import fetchCurrencies from '../fetchAPI/fetchCurrencies';
+import fetchExpenses from '../fetchAPI/fetchExpenses';
 
 class Wallet extends Component {
   constructor() {
