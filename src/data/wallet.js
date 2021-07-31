@@ -1,13 +1,13 @@
 export const inputs = [
   {
     labelText: 'Valor',
-    id: 'valor',
+    id: 'value-input',
     type: 'number',
     name: 'value',
   },
   {
     labelText: 'Descrição',
-    id: 'descricao',
+    id: 'description-input',
     type: 'text',
     name: 'description',
   },
@@ -16,13 +16,13 @@ export const inputs = [
 export const selects = [
   {
     labelText: 'Método de pagamento',
-    id: 'metodo',
+    id: 'method-input',
     name: 'method',
     options: ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'],
   },
   {
     labelText: 'Tag',
-    id: 'tag',
+    id: 'tag-input',
     name: 'tag',
     options: ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'],
   },

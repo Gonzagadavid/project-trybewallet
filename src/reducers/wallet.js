@@ -1,5 +1,6 @@
 import {
-  CURRENCIES_ERROR, CURRENCIES_SUCESS, EXPENSES_ERROR, EXPENSES_SUCESS, REMOVE_EXPENSE,
+  CURRENCIES_ERROR, CURRENCIES_SUCESS, EDIT_EXPENSE,
+  EXPENSES_ERROR, EXPENSES_SUCESS, REMOVE_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -32,6 +33,15 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: state.expenses.filter(({ id }) => id !== action.state),
+    };
+
+  case EDIT_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.reduce((list, expense) => (
+        expense.id === action.state.id
+          ? [...list, { ...action.state, exchangeRates: expense.exchangeRates }]
+          : [...list, { ...expense }]), []),
     };
 
   default: return state;

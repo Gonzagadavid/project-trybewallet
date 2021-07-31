@@ -1,11 +1,11 @@
 import React from 'react';
-import { arrayOf, func, string } from 'prop-types';
+import { arrayOf, bool, func, string } from 'prop-types';
 import Select from '../Select';
 import Input from '../Input';
 import { inputs, selects } from '../../data/wallet';
 
 const FormWallet = (props) => {
-  const { moedas, currency, handleChange, submit } = props;
+  const { moedas, currency, handleChange, submit, edit, onEdit } = props;
   return (
     <form>
       { inputs.map(({ labelText, type, id, name }) => (<Input
@@ -19,7 +19,7 @@ const FormWallet = (props) => {
       />))}
       <Select
         labelText="Moeda"
-        id="moeda"
+        id="currency-input"
         name="currency"
         value={ currency }
         change={ handleChange }
@@ -34,7 +34,10 @@ const FormWallet = (props) => {
         options={ options }
         key={ id }
       />))}
-      <button type="button" onClick={ submit }>Adicionar despesa</button>
+      {
+        edit ? <button type="button" onClick={ onEdit }>Editar despesa</button>
+          : <button type="button" onClick={ submit }>Adicionar despesa</button>
+      }
     </form>
   );
 };
@@ -44,6 +47,8 @@ FormWallet.propTypes = {
   currency: string.isRequired,
   handleChange: func.isRequired,
   submit: func.isRequired,
+  edit: bool.isRequired,
+  onEdit: func.isRequired,
 };
 
 export default FormWallet;

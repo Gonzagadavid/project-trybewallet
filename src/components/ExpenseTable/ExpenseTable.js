@@ -5,7 +5,7 @@ import { removeExpense } from '../../actions';
 import expenseTable from '../../data/expenseTable';
 
 const ExpenseTable = (props) => {
-  const { expenses, remove } = props;
+  const { expenses, remove, enableEdit } = props;
   return (
     <table>
       <thead>
@@ -19,7 +19,7 @@ const ExpenseTable = (props) => {
         ) => {
           const { name, ask } = exchangeRates[currency];
           const total = (+value * +ask).toFixed(2);
-          const askRound = Math.round((ask * 100)) / 100;
+          const askRound = (Math.round((ask * 100)) / 100).toFixed(2);
           return (
             <tr key={ id }>
               <td>{description}</td>
@@ -31,7 +31,13 @@ const ExpenseTable = (props) => {
               <td>{total}</td>
               <td>Real</td>
               <td>
-                <button type="button">Editar</button>
+                <button
+                  type="button"
+                  data-testid="edit-btn"
+                  onClick={ () => enableEdit(id) }
+                >
+                  Editar
+                </button>
                 <button
                   type="button"
                   data-testid="delete-btn"
@@ -61,4 +67,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);
 ExpenseTable.propTypes = {
   expenses: arrayOf(objectOf).isRequired,
   remove: func.isRequired,
+  enableEdit: func.isRequired,
 };
