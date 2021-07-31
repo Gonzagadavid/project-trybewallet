@@ -1,6 +1,7 @@
 import { arrayOf, func, string } from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ExpenseTable from '../components/ExpenseTable/ExpenseTable';
 import FormWallet from '../components/FormWallet/FormWallet';
 import fetchCurrencies from '../reducers/fetchCurrencies';
 import fetchExpenses from '../reducers/fetchExpenses';
@@ -48,13 +49,14 @@ class Wallet extends Component {
         <FormWallet
           moedas={ moedas }
           handleChange={ this.handleChange }
-          valor={ value }
-          descricao={ description }
-          moeda={ currency }
-          metodo={ method }
+          value={ value }
+          description={ description }
+          currency={ currency }
+          method={ method }
           tag={ tag }
           submit={ this.onSubmitData }
         />
+        <ExpenseTable />
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import {
-  CURRENCIES_ERROR, CURRENCIES_SUCESS, EXPENSES_ERROR, EXPENSES_SUCESS,
+  CURRENCIES_ERROR, CURRENCIES_SUCESS, EXPENSES_ERROR, EXPENSES_SUCESS, REMOVE_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -29,6 +29,13 @@ const walletReducer = (state = INITIAL_STATE, action) => {
 
   case EXPENSES_ERROR:
     return { ...state, error: 'Ocorreu um erro com a busca dos valores' };
+
+  case REMOVE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter(({ id }) => id !== action.state.id),
+      total: (+state.total - +action.state.total).toFixed(2),
+    };
 
   default: return state;
   }
