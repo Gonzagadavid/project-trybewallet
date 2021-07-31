@@ -35,7 +35,7 @@ const ExpenseTable = (props) => {
                 <button
                   type="button"
                   data-testid="delete-btn"
-                  onClick={ () => remove({ id, total }) }
+                  onClick={ () => remove(id) }
                 >
                   Excluir
                 </button>
@@ -53,7 +53,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  remove: (obj) => dispatch(removeExpense(obj)),
+  remove: (id) => dispatch(removeExpense(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);

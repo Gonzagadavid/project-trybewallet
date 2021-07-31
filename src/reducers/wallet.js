@@ -6,7 +6,6 @@ const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   error: '',
-  total: '0',
 };
 
 const walletReducer = (state = INITIAL_STATE, action) => {
@@ -21,9 +20,8 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: [
-        ...state.expenses, { id: state.expenses.length, ...action.state.expense },
+        ...state.expenses, { id: state.expenses.length, ...action.state },
       ],
-      total: (+state.total + +action.state.total).toFixed(2),
       error: '',
     };
 
@@ -33,8 +31,7 @@ const walletReducer = (state = INITIAL_STATE, action) => {
   case REMOVE_EXPENSE:
     return {
       ...state,
-      expenses: state.expenses.filter(({ id }) => id !== action.state.id),
-      total: (+state.total - +action.state.total).toFixed(2),
+      expenses: state.expenses.filter(({ id }) => id !== action.state),
     };
 
   default: return state;

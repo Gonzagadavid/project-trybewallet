@@ -1,4 +1,4 @@
-import { arrayOf, func, string } from 'prop-types';
+import { arrayOf, func, string, objectOf } from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ExpenseTable from '../components/ExpenseTable/ExpenseTable';
@@ -12,12 +12,13 @@ class Wallet extends Component {
     this.state = {
       value: 0,
       description: '',
-      currency: '',
-      method: '',
+      currency: 'USD',
+      method: 'Dinheiro',
       tag: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.onSubmitData = this.onSubmitData.bind(this);
+    this.calcTotal = this.calcTotal.bind(this);
   }
 
   componentDidMount() {
@@ -28,7 +29,9 @@ class Wallet extends Component {
   onSubmitData() {
     const { saveData } = this.props;
     saveData({ ...this.state });
-    this.setState({ value: 0, description: '', currency: '', method: '', tag: '' });
+    this.setState({
+      value: 0, description: '', currency: 'USD', method: 'Dinheiro', tag: '',
+    });
   }
 
   handleChange({ target }) {
@@ -36,14 +39,24 @@ class Wallet extends Component {
     this.setState({ [name]: value });
   }
 
+  calcTotal() {
+    const { expenses } = this.props;
+    if (!expenses.length) return '0';
+    const total = expenses
+      .map(({ value, exchangeRates, currency }) => +exchangeRates[currency].ask * +value)
+      .reduce((valueTotal, valueCurrent) => valueTotal + valueCurrent, 0);
+
+    return total.toFixed(2);
+  }
+
   render() {
-    const { emailField, moedas, total } = this.props;
+    const { emailField, moedas } = this.props;
     const { value, currency, description, tag, method } = this.state;
     return (
       <div>
         <header>
           <span data-testid="email-field">{emailField}</span>
-          <span data-testid="total-field">{total}</span>
+          <span data-testid="total-field">{this.calcTotal()}</span>
           <span data-testid="header-currency-field">BRL</span>
         </header>
         <FormWallet
@@ -65,7 +78,7 @@ class Wallet extends Component {
 const mapStateToProps = ({ user, wallet }) => ({
   emailField: user.email,
   moedas: wallet.currencies,
-  total: wallet.total,
+  expenses: wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -80,9 +93,9 @@ Wallet.propTypes = {
   fetchMoedas: func.isRequired,
   saveData: func.isRequired,
   moedas: arrayOf(string).isRequired,
-  total: string,
+  expenses: arrayOf(objectOf),
 };
 
 Wallet.defaultProps = {
-  total: '0',
+  expenses: [],
 };
