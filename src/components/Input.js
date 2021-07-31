@@ -22,10 +22,14 @@ const Input = (props) => {
 Input.propTypes = {
   labelText: string.isRequired,
   id: string.isRequired,
-  value: oneOfType([number, string]).isRequired,
+  value: oneOfType([number, string]),
   change: func.isRequired,
   type: string.isRequired,
   name: string.isRequired,
+};
+
+Input.defaultProps = {
+  value: 'Not found',
 };
 
 export default Input;

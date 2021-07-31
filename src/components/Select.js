@@ -25,10 +25,14 @@ const Select = (props) => {
 Select.propTypes = {
   labelText: string.isRequired,
   id: string.isRequired,
-  value: string.isRequired,
+  value: string,
   change: func.isRequired,
   name: string.isRequired,
   options: arrayOf(string).isRequired,
+};
+
+Select.defaultProps = {
+  value: 'Not found',
 };
 
 export default Select;

@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   error: '',
+  total: '0',
 };
 
 const walletReducer = (state = INITIAL_STATE, action) => {
@@ -17,7 +18,14 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     return { ...state, error: 'Ocorreu um erro com a busca da moedas' };
 
   case EXPENSES_SUCESS:
-    return { ...state, expenses: action.state, error: '' };
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses, { id: state.expenses.length, ...action.state.expense },
+      ],
+      total: (+state.total + +action.state.total).toFixed(2),
+      error: '',
+    };
 
   case EXPENSES_ERROR:
     return { ...state, error: 'Ocorreu um erro com a busca dos valores' };

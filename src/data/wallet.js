@@ -3,13 +3,13 @@ export const inputs = [
     labelText: 'Valor',
     id: 'valor',
     type: 'number',
-    name: 'valor',
+    name: 'value',
   },
   {
     labelText: 'Descrição',
     id: 'descricao',
     type: 'text',
-    name: 'descricao',
+    name: 'description',
   },
 ];
 
@@ -17,7 +17,7 @@ export const selects = [
   {
     labelText: 'Método de pagamento',
     id: 'metodo',
-    name: 'metodo',
+    name: 'method',
     options: ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'],
   },
   {
